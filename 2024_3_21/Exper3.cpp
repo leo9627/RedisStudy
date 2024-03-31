@@ -18,15 +18,11 @@ int main()
     CreateGoods(con);
     reply=(redisReply*)redisCommand(con,"zcard goods");
     int k=reply->integer;
-    cout<<k<<endl;
-    //srand(time(NULL));
     while(k>=K+2)
     {
-        //cout<<1<<endl;
         int begin=clock();
         while(1)
         {
-            //srand(time(NULL));
             if(rand()%2==0)
             {
                 ReadGoods(con,k);
@@ -86,7 +82,6 @@ void ReadGoods(redisContext* con,int k)
     redisReply* reply2=NULL;
     srand(time(NULL));
     int index=(rand()%k);
-    //cout<<index<<endl;
     reply=(redisReply*)redisCommand(con,"zrange goods %d %d",index,index);
     reply2=(redisReply*)redisCommand(con,"zscore goods %s",reply->element[0]->str);
     int score=StrToInt(reply2->str,strlen(reply2->str));
